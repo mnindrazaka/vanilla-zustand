@@ -1,11 +1,11 @@
-import { useAppStore } from "../store";
+import { useStore } from "@/lib";
+import { store } from "../store";
 
 export const CounterPreview = () => {
-  const [state] = useAppStore();
-
+  const counter = useStore(store, (state) => state.counter);
   return (
     <div>
-      <p>counter : {state.counter} </p>
+      <p>counter : {counter} </p>
     </div>
   );
 };

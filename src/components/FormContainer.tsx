@@ -1,7 +1,6 @@
-import { useAppStore } from "../store";
+import { store } from "../store";
 
 export const FormContainer = () => {
-  const [state, setState] = useAppStore();
   return (
     <form>
       <div>
@@ -9,9 +8,8 @@ export const FormContainer = () => {
           name
           <input
             type="text"
-            value={state.form.name}
             onChange={(e) =>
-              setState((state) => ({
+              store.setState((state) => ({
                 ...state,
                 form: { ...state.form, name: e.target.value },
               }))
@@ -25,9 +23,8 @@ export const FormContainer = () => {
           address
           <input
             type="text"
-            value={state.form.address}
             onChange={(e) =>
-              setState((state) => ({
+              store.setState((state) => ({
                 ...state,
                 form: { ...state.form, address: e.target.value },
               }))

@@ -30,22 +30,26 @@ export function createStore<T>(initialState: T): Store<T> {
   return { getState, setState, subscribe };
 }
 
-type UseStoreParams<State> = {
-  store: Store<State>;
-};
-
 // using force update pattern
-export function useStore<State>(params: UseStoreParams<State>) {
+export function useStore<State, PartialState>(
+  store: Store<State>,
+  mapper: (state: State) => PartialState = (state) =>
+    state as unknown as PartialState
+) {
   const [_, forceUpdate] = React.useReducer((c) => c + 1, 0);
 
   React.useEffect(() => {
-    const unsubscribe = params.store.subscribe((prevState, nextState) => {
-      forceUpdate();
+    const unsubscribe = store.subscribe((prevState, nextState) => {
+      const partialPrevState = mapper(prevState);
+      const partialNextState = mapper(nextState);
+      if (partialPrevState !== partialNextState) {
+        forceUpdate();
+      }
     });
     return unsubscribe;
-  }, [params]);
+  }, [mapper, store]);
 
-  return [params.store.getState(), params.store.setState] as const;
+  return mapper(store.getState());
 }
 
 // using new React hooks

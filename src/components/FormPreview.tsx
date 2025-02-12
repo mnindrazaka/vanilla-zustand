@@ -1,11 +1,12 @@
-import { useAppStore } from "@/store";
+import { useStore } from "@/lib";
+import { store } from "@/store";
 
 export const FormPreview = () => {
-  const [state] = useAppStore();
+  const form = useStore(store, (state) => state.form);
   return (
     <div>
-      <p>Name : {state.form.name} </p>
-      <p>Address : {state.form.address} </p>
+      <p>Name : {form.name} </p>
+      <p>Address : {form.address} </p>
     </div>
   );
 };

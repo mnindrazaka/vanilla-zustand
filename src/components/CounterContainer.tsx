@@ -1,19 +1,19 @@
-import { useAppStore } from "../store";
+import { useStore } from "@/lib";
+import { store } from "@/store";
 
 export const CounterContainer = () => {
-  const [_, setState] = useAppStore();
   return (
     <div>
       <button
         onClick={() =>
-          setState((state) => ({ ...state, counter: state.counter + 1 }))
+          store.setState((state) => ({ ...state, counter: state.counter + 1 }))
         }
       >
         increase
       </button>
       <button
         onClick={() =>
-          setState((state) => ({ ...state, counter: state.counter - 1 }))
+          store.setState((state) => ({ ...state, counter: state.counter - 1 }))
         }
       >
         decrease
